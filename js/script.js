@@ -207,7 +207,7 @@ function playBackgroundMusic() {
     musicSource.loop = true;
     
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = 0.9; // Set volume to 30%
+    gainNode.gain.value = 0.6; // Set volume to 60%
     
     musicSource.connect(gainNode);
     gainNode.connect(audioContext.destination);
