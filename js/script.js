@@ -11,16 +11,25 @@ let assets = {
     enemyBasic: null,
     enemyFast: null,
     enemyHeavy: null,
-    backgroundMusic: null
+    backgroundMusic: null,
+    skillTriple: null,
+    skillRapid: null,
+    skillPower: null,
+    skillShield: null,
+
 };
 
-// Asset paths - modify these if your file structure is different
 const assetPaths = {
     player: './assets/images/player.png',
     enemyBasic: './assets/images/enemy_basic.png',
     enemyFast: './assets/images/enemy_fast.png',
     enemyHeavy: './assets/images/enemy_heavy.png',
-    backgroundMusic: './assets/audio/background_music.mp3'
+    backgroundMusic: './assets/audio/background_music.mp3',
+
+    skillPower: './assets/images/skill_power.png',
+    skillRapid: './assets/images/skill_rapid.png',
+    skillShield: './assets/images/skill_shield.png',
+    skillTriple: './assets/images/skill_triple.png'
 };
 
 // Function to load images
@@ -80,7 +89,11 @@ async function loadAllAssets() {
         loadImage(assetPaths.enemyBasic, 'enemyBasic'),
         loadImage(assetPaths.enemyFast, 'enemyFast'),
         loadImage(assetPaths.enemyHeavy, 'enemyHeavy'),
-        loadAudio(assetPaths.backgroundMusic)
+        loadAudio(assetPaths.backgroundMusic),
+        loadImage(assetPaths.skillTriple, 'skillTriple'),
+        loadImage(assetPaths.skillRapid, 'skillRapid'),
+        loadImage(assetPaths.skillPower, 'skillPower'),
+        loadImage(assetPaths.skillShield, 'skillShield'),
     ]);
     
     // Initialize default assets for any that failed to load
@@ -207,7 +220,7 @@ function playBackgroundMusic() {
     musicSource.loop = true;
     
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = 0.6; // Set volume to 60%
+    gainNode.gain.value = 0.9; // Set volume to 30%
     
     musicSource.connect(gainNode);
     gainNode.connect(audioContext.destination);
@@ -591,7 +604,6 @@ class Powerup {
         this.y = y;
         this.speed = 2;
         this.size = 20;
-        this.rotation = 0;
         this.types = ['tripleShot', 'rapidFire', 'powerShot', 'shield'];
         this.type = this.types[Math.floor(Math.random() * this.types.length)];
         this.colors = {
@@ -604,19 +616,35 @@ class Powerup {
     
     update() {
         this.y += this.speed;
-        this.rotation += 0.1;
     }
     
     draw() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
-        ctx.fillStyle = this.colors[this.type];
-        ctx.shadowColor = this.colors[this.type];
-        ctx.shadowBlur = 10;
-        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+
+        const imageMap = {
+            tripleShot: assets.skillTriple,
+            rapidFire: assets.skillRapid,
+            powerShot: assets.skillPower,
+            shield: assets.skillShield
+        };
+
+        const img = imageMap[this.type];
+
+        if (img) {
+            ctx.drawImage(img, -this.size / 2, -this.size / 2, this.size, this.size);
+        } else {
+            // fallback jika gambar gagal dimuat
+            ctx.fillStyle = this.colors[this.type];
+            ctx.shadowColor = this.colors[this.type];
+            ctx.shadowBlur = 10;
+            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+        }
+
         ctx.restore();
     }
+
     
     isOffScreen() {
         return this.y > canvas.height + 50;
@@ -695,14 +723,15 @@ function updateUI() {
     const livesElement = document.getElementById('lives');
     const healthFill = document.getElementById('healthFill');
     const currentCharacter = document.getElementById('currentCharacter');
-    const stageElement = document.getElementById('stage');
+    const stageElement = document.getElementById('stage'); // pastikan ini ada
 
     if (scoreElement) scoreElement.textContent = score;
     if (livesElement) livesElement.textContent = lives;
     if (healthFill) healthFill.style.width = health + '%';
     if (currentCharacter) currentCharacter.textContent = characters[selectedCharacter].name;
-    if (stageElement) stageElement.textContent = stage;
+    if (stageElement) stageElement.textContent = stage; // <- tambahkan baris ini
 }
+
 
 function gameLoop() {
     if (gameState !== 'playing') return;
@@ -893,6 +922,7 @@ function restartGame() {
     if (gameOverScreen) gameOverScreen.style.display = 'none';
     if (startScreen) startScreen.style.display = 'flex';
 }
+
 
 // Initialize the game
 async function initGame() {
