@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guardian of Space</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="gameContainer">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div id="ui">
+      <!-- Left UI: Score, Stage, Lives -->
+      <div>
+        <div>Score: <span id="score">0</span></div>
+        <div>Stage: <span id="stage">1</span></div>
+        <div>Lives: <span id="lives">3</span></div>
+      </div>
+
+      <!-- Right UI: Health Bar and Character -->
+      <div style="display: flex; flex-direction: column; align-items: flex-end;">
+        <div id="healthBar">
+          <div id="healthFill" style="width: 100%"></div>
+        </div>
+        <div>Character: <span id="currentCharacter">Nova</span></div>
+      </div>
+
+      <!-- Powerup Indicator -->
+      <div id="powerupStatus" class="powerup-indicator"></div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen">
+      <h1>GUARDIAN OF SPACE</h1>
+      <p>Choose your pilot:</p>
+
+      <div class="character-select">
+        <div class="character selected" data-character="nova">
+          <h3>Nova</h3>
+          <p>Balanced fighter</p>
+        </div>
+        <div class="character" data-character="blaze">
+          <h3>Blaze</h3>
+          <p>High damage</p>
+        </div>
+        <div class="character" data-character="viper">
+          <h3>Viper</h3>
+          <p>Speed demon</p>
+        </div>
+      </div>
+
+      <p>Use WASD or Arrow Keys to move, SPACE to shoot</p>
+      <button onclick="startGame()">START MISSION</button>
+      <button id="musicToggle" onclick="toggleMusic()">Stop Music</button>
+
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen">
+      <h1>MISSION COMPLETE</h1>
+      <p>Final Score: <span id="finalScore">0</span></p>
+      <p>Stage Reached: <span id="finalStage">1</span></p>
+      <button onclick="restartGame()">RETRY MISSION</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

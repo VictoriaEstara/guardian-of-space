@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Orbitron', monospace;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Game Container */
+#gameContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  max-width: 1200px;
+  max-height: 800px;
+  border: 2px solid #00d4ff;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+  overflow: hidden;
+}
+
+/* Canvas */
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%);
+}
+
+/* UI Overlay */
+#ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  color: #00d4ff;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+  z-index: 10;
+  pointer-events: none;
+}
+
+#topUI {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#bottomUI {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+/* Health Bar */
+#healthBar {
+  width: 160px;
+  height: 16px;
+  margin-bottom: 4px;
+  background: rgba(255, 0, 0, 0.3);
+  border: 2px solid #ff0040;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#healthFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0040, #ff4080);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 0, 64, 0.8);
+}
+
+/* Screens */
+#startScreen,
+#gameOverScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #00d4ff;
+  text-align: center;
+  z-index: 100;
+}
+
+#gameOverScreen {
+  display: none;
+}
+
+/* Headings */
+h1 {
+  font-size: 3em;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 1);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+  }
+  to {
+    text-shadow: 0 0 30px rgba(0, 212, 255, 1);
+  }
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(45deg, #00d4ff, #0099cc);
+  border: none;
+  padding: 15px 30px;
+  color: white;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 1.2em;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
+}
+
+/* Character Selection */
+.character-select {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.character {
+  padding: 15px;
+  border: 2px solid #00d4ff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.character:hover,
+.character.selected {
+  background: rgba(0, 212, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Powerup Indicator */
+.powerup-indicator {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  color: #ffff00;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+}
