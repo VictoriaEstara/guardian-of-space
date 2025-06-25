@@ -695,11 +695,13 @@ function updateUI() {
     const livesElement = document.getElementById('lives');
     const healthFill = document.getElementById('healthFill');
     const currentCharacter = document.getElementById('currentCharacter');
-    
+    const stageElement = document.getElementById('stage');
+
     if (scoreElement) scoreElement.textContent = score;
     if (livesElement) livesElement.textContent = lives;
     if (healthFill) healthFill.style.width = health + '%';
     if (currentCharacter) currentCharacter.textContent = characters[selectedCharacter].name;
+    if (stageElement) stageElement.textContent = stage;
 }
 
 function gameLoop() {
@@ -872,11 +874,21 @@ function gameOver() {
 function restartGame() {
     gameState = 'start';
     stopBackgroundMusic();
-    
+
+    // Reset nilai dasar
+    score = 0;
+    stage = 1;
+    lives = 3;
+    health = 100;
+    gameSpeed = 1;
+
+    // Update UI agar tampilan benar-benar kembali ke awal
+    updateUI();
+
     const musicToggle = document.getElementById('musicToggle');
     const gameOverScreen = document.getElementById('gameOverScreen');
     const startScreen = document.getElementById('startScreen');
-    
+
     if (musicToggle) musicToggle.textContent = 'Play Music';
     if (gameOverScreen) gameOverScreen.style.display = 'none';
     if (startScreen) startScreen.style.display = 'flex';
